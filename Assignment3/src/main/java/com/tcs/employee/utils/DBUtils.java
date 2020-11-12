@@ -1,4 +1,4 @@
-package com.tcs.ecommerce.utils;
+package com.tcs.employee.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,8 +16,10 @@ public class DBUtils {
 					.getConnection("jdbc:mysql://localhost:3306/TCS?useSSL=false", "root","MYSQL123$");
 			connection.setAutoCommit(false);
 			return connection;
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch(SQLException e){
 			e.printStackTrace();
 		}
 		return connection;

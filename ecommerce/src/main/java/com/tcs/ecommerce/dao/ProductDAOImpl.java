@@ -1,5 +1,6 @@
 package com.tcs.ecommerce.dao;
 
+import java.security.ProtectionDomain;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +10,7 @@ import java.util.Optional;
 
 import javax.swing.text.html.HTMLDocument.HTMLReader.PreAction;
 
+import com.mysql.cj.protocol.Resultset;
 import com.tcs.ecommerce.model.Product;
 import com.tcs.ecommerce.utils.DBUtils;
 
@@ -38,7 +40,7 @@ public static ProductDAO getInstance() {
 		Connection connection = DBUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		int result = 0;
-		String insertProduct = "insert into product (productid,productname,description,category,price) values(?,?,?,?,?)";
+		String insertProduct = "insert into Product VALUES(?,?,?,?,?)";
 		try {
 			 preparedStatement = connection.prepareStatement(insertProduct);
 			 preparedStatement.setInt(1, product.getProductId());
@@ -77,27 +79,30 @@ public static ProductDAO getInstance() {
 
 	@Override
 	public Optional<Product> getProductById(int id) {
+		// TODO Auto-generated method stub
 		Connection connection = DBUtils.getConnection();
 		PreparedStatement preparedStatement = null;
-		ResultSet result = null;
+		ResultSet resultSet = null;
+		
 		Product product = null;
-		
-		String query = "SELECT * FROM Product where productId =?";
-		
+		String query = "select * from Product where productid=?";
 		try {
-			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setInt(1, id);
+			 preparedStatement = connection.prepareStatement(query);
+			 preparedStatement.setInt(1,id);
 			
-			result = preparedStatement.executeQuery();
-			
-			if(result.next()) {
-				product = new Product();
-				product.setProductId(result.getInt("productId"));
-				product.setProductName(result.getString("productName"));
-				product.setDescription(result.getString("productDescription"));
-				product.setCategory(result.getString("productCategory"));
-				product.setPrice(result.getFloat("productPrice"));
+			resultSet =  preparedStatement.executeQuery();
+			 
+			if(resultSet.next()) {
+				 product = new Product();
+				product.setProductId(resultSet.getInt("productid"));
+				product.setProductName(resultSet.getString("productname"));
+				product.setDescription(resultSet.getString("productDescription"));
+				product.setCategory(resultSet.getString("productCategory"));
+				product.setPrice(resultSet.getFloat("productPrice"));
+				
+				 
 			}
+			 
 		} catch (SQLException e) {
 			try {
 				connection.rollback();
@@ -109,7 +114,6 @@ public static ProductDAO getInstance() {
 			e.printStackTrace();
 			return Optional.empty();
 		}
-		
 		finally {
 			DBUtils.closeConnection(connection);
 		}
