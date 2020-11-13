@@ -10,34 +10,23 @@ import java.util.Optional;
 
 import javax.swing.text.html.HTMLDocument.HTMLReader.PreAction;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.mysql.cj.protocol.Resultset;
 import com.tcs.ecommerce.model.Product;
 import com.tcs.ecommerce.utils.DBUtils;
 
+@Repository
 public class ProductDAOImpl implements ProductDAO {
 
-	
-private ProductDAOImpl() {
-	// TODO Auto-generated constructor stub
-}
+	@Autowired
+	DBUtils dbutils;
 
-private static ProductDAO dao;
-
-public static ProductDAO getInstance() {
-	
-	if(dao==null) {
-		dao = new ProductDAOImpl();
-		System.out.println("inside the if condition");
-		return dao;
-	}
-	return dao;
-	
-	
-}
 	@Override
 	public String createProduct(Product product) {
 		// TODO Auto-generated method stub
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbutils.getConnection();
 		PreparedStatement preparedStatement = null;
 		int result = 0;
 		String insertProduct = "insert into Product VALUES(?,?,?,?,?)";
@@ -72,7 +61,7 @@ public static ProductDAO getInstance() {
 			return "fail";
 		}
 		finally {
-			DBUtils.closeConnection(connection);
+			dbutils.closeConnection(connection);
 		}
 		
 	}
@@ -80,7 +69,7 @@ public static ProductDAO getInstance() {
 	@Override
 	public Optional<Product> getProductById(int id) {
 		// TODO Auto-generated method stub
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbutils.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		
@@ -115,7 +104,7 @@ public static ProductDAO getInstance() {
 			return Optional.empty();
 		}
 		finally {
-			DBUtils.closeConnection(connection);
+			dbutils.closeConnection(connection);
 		}
 		return Optional.of(product);
 	}

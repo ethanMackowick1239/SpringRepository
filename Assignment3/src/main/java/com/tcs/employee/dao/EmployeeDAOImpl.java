@@ -11,36 +11,27 @@ import java.util.Optional;
 
 import javax.swing.text.html.HTMLDocument.HTMLReader.PreAction;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.mysql.cj.protocol.Resultset;
 import com.tcs.employee.model.Employee;
 import com.tcs.employee.utils.DBUtils;
 
+@Repository
 public class EmployeeDAOImpl implements EmployeeDAO {
+	
+	@Autowired
+	DBUtils dbutils;
 
 	
-private EmployeeDAOImpl() {
-	// TODO Auto-generated constructor stub
-}
 
-private static EmployeeDAO dao;
-
-public static EmployeeDAO getInstance() {
-	
-	if(dao==null) {
-		dao = new EmployeeDAOImpl();
-		System.out.println("inside the if condition");
-		return dao;
-	}
-	return dao;
-	
-	
-}
 	public String addEmployee(Employee employee) {
 		// TODO Auto-generated method stub
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbutils.getConnection();
 		PreparedStatement preparedStatement = null;
 		int result = 0;
-		String insertProduct = "insert into Employee VALUES(?,?,?,?,?)";
+		String insertProduct = "insert into Employee VALUES(?,?,?,?,?,?)";
 		try {
 			 preparedStatement = connection.prepareStatement(insertProduct);
 			 preparedStatement.setLong(1, employee.getId());
@@ -73,14 +64,14 @@ public static EmployeeDAO getInstance() {
 			return "fail";
 		}
 		finally {
-			DBUtils.closeConnection(connection);
+			dbutils.closeConnection(connection);
 		}
 		
 	}
 
 	public Optional<Employee> findById(long id) {
 		// TODO Auto-generated method stub
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbutils.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		
@@ -115,7 +106,7 @@ public static EmployeeDAO getInstance() {
 			return Optional.empty();
 		}
 		finally {
-			DBUtils.closeConnection(connection);
+			dbutils.closeConnection(connection);
 		}
 		return Optional.of(employee);
 	}
@@ -123,7 +114,7 @@ public static EmployeeDAO getInstance() {
 	
 	public String updateEmployee(long id, Employee employee) {
 		// TODO Auto-generated method stub
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbutils.getConnection();
 		PreparedStatement preparedStatement = null;
 		int result = 0;
 		String updateEmployee = "UPDATE Employee SET organizationId=?, departmentId=?, name=?,age=?, position=? WHERE id =?";
@@ -160,12 +151,12 @@ public static EmployeeDAO getInstance() {
 			return "fail";
 		}
 		finally {
-			DBUtils.closeConnection(connection);
+			dbutils.closeConnection(connection);
 		}
 		
 	}
 	public String deleteEmployee(long id) {
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbutils.getConnection();
 		PreparedStatement preparedStatement = null;
 		int result = 0;
 		String deleteEmployee = "DELETE FROM Employee WHERE id =?";
@@ -196,13 +187,13 @@ public static EmployeeDAO getInstance() {
 			return "fail";
 		}
 		finally {
-			DBUtils.closeConnection(connection);
+			dbutils.closeConnection(connection);
 		}
 	}
 	
 	
 	public Optional<List<Employee>> getEmployees() {
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbutils.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		List<Employee> employeeList = null;
@@ -240,12 +231,12 @@ public static EmployeeDAO getInstance() {
 			return Optional.empty();
 		}
 		finally {
-			DBUtils.closeConnection(connection);
+			dbutils.closeConnection(connection);
 		}
 		return Optional.of(employeeList);
 	}
 	public Optional<List<Employee>> findByOrganization(long id) {
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbutils.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		List<Employee> employeeList = null;
@@ -283,7 +274,7 @@ public static EmployeeDAO getInstance() {
 			return Optional.empty();
 		}
 		finally {
-			DBUtils.closeConnection(connection);
+			dbutils.closeConnection(connection);
 		}
 		return Optional.of(employeeList);
 	}

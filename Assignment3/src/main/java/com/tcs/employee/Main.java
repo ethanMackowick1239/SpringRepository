@@ -1,7 +1,11 @@
 package com.tcs.employee;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.tcs.employee.config.DBConfig;
 import com.tcs.employee.dao.EmployeeDAO;
 import com.tcs.employee.dao.EmployeeDAOImpl;
 import com.tcs.employee.model.Employee;
@@ -12,29 +16,35 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		Employee employee = new Employee(1l,1l , 1l, "Ethan", 25, "Big boy");
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DBConfig.class);
 		
-		EmployeeService employeeService =  EmployeeServiceImpl.getInstance();
+		//DataSource dataSource = context.getBean("mySqlDataSource", DataSource.class);
 		
-		String result = employeeService.addEmployee(employee);
+		EmployeeService employeeService = context.getBean(EmployeeService.class);
+		Employee employee = new Employee(2l, 1l, 1l, "Ethan", 23, "Big Boy");
+		Employee employee2 = new Employee(2l,1l, 1l, "Bob", 23, "Big Boy");
+		
+		String add = employeeService.addEmployee(employee);
+		System.out.println(add);
+		
+		Optional<Employee> findById= employeeService.findById(1);
+		System.out.println(findById);
+		
+		String delete=employeeService.deleteEmployee(1);
+		System.out.println(delete);
+		
+		String update = employeeService.addEmployee(employee2);
+		System.out.println(update);
+		
+		Optional<List<Employee>> organization = employeeService.findByOrganization(1l);
+		System.out.println(organization);
+		
+		Optional<List<Employee>> allEmployees = employeeService.getEmployees();
+		System.out.println(allEmployees);
 		
 		
-		if("success".equals(result)) {
-			System.out.println("recored added successfully");
-		}
-		else {
-			System.out.println("problem");
-		}
-		
-		Optional<Employee> optional= employeeService.findById(2l);
-		
-		if(optional.isPresent()) {
-			Employee product2 = optional.get();
-			System.out.println(product2);
-		}
-		else {
-			System.out.println("product is not available");
-		}
-		
+		//System.out.println(dataSource);
+		System.out.println(employeeService);
+		context.close();
 	}
 }
