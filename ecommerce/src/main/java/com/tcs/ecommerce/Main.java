@@ -12,7 +12,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		Product product = new Product(4, "laptop", "i5 1oth gen", 123.0f, "laptop");
+		Product product = new Product(2, "laptop", "i5 1oth gen", 123.0f, "laptop");
 		
 		ProductService productService =  ProductServiceImpl.getInstance();
 		
@@ -26,7 +26,7 @@ public class Main {
 			System.out.println("problem");
 		}
 		
-		Optional<Product> optional= productService.getProductById(2);
+		Optional<Product> optional= productService.getProductById(1);
 		
 		if(optional.isPresent()) {
 			Product product2 = optional.get();

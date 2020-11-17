@@ -11,25 +11,45 @@ import java.util.Optional;
 import javax.swing.text.html.HTMLDocument.HTMLReader.PreAction;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.mysql.cj.protocol.Resultset;
 import com.tcs.ecommerce.model.Product;
 import com.tcs.ecommerce.utils.DBUtils;
 
-@Repository
+//@Repository
 public class ProductDAOImpl implements ProductDAO {
 
+	//DBUtils object or not?
+	
 	@Autowired
-	DBUtils dbutils;
-
+	DBUtils dbUtils;
+	
+//private ProductDAOImpl() {
+//	// TODO Auto-generated constructor stub
+//}
+//
+//private static ProductDAO dao;
+//
+//public static ProductDAO getInstance() {
+//	
+//	if(dao==null) {
+//		dao = new ProductDAOImpl();
+//		System.out.println("inside the if condition");
+//		return dao;
+//	}
+//	return dao;
+//	
+//	
+//}
 	@Override
 	public String createProduct(Product product) {
 		// TODO Auto-generated method stub
-		Connection connection = dbutils.getConnection();
+		Connection connection = dbUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		int result = 0;
-		String insertProduct = "insert into Product VALUES(?,?,?,?,?)";
+		String insertProduct = "insert into PRODUCT (productid,productname,description,category,price) values(?,?,?,?,?)";
 		try {
 			 preparedStatement = connection.prepareStatement(insertProduct);
 			 preparedStatement.setInt(1, product.getProductId());
@@ -61,7 +81,7 @@ public class ProductDAOImpl implements ProductDAO {
 			return "fail";
 		}
 		finally {
-			dbutils.closeConnection(connection);
+			dbUtils.closeConnection(connection);
 		}
 		
 	}
@@ -69,12 +89,12 @@ public class ProductDAOImpl implements ProductDAO {
 	@Override
 	public Optional<Product> getProductById(int id) {
 		// TODO Auto-generated method stub
-		Connection connection = dbutils.getConnection();
+		Connection connection = dbUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		
 		Product product = null;
-		String query = "select * from Product where productid=?";
+		String query = "select * from PRODUCT where productid=?";
 		try {
 			 preparedStatement = connection.prepareStatement(query);
 			 preparedStatement.setInt(1,id);
@@ -85,9 +105,9 @@ public class ProductDAOImpl implements ProductDAO {
 				 product = new Product();
 				product.setProductId(resultSet.getInt("productid"));
 				product.setProductName(resultSet.getString("productname"));
-				product.setDescription(resultSet.getString("productDescription"));
-				product.setCategory(resultSet.getString("productCategory"));
-				product.setPrice(resultSet.getFloat("productPrice"));
+				product.setDescription(resultSet.getString("description"));
+				product.setCategory(resultSet.getString("category"));
+				product.setPrice(resultSet.getFloat("price"));
 				
 				 
 			}
@@ -104,7 +124,7 @@ public class ProductDAOImpl implements ProductDAO {
 			return Optional.empty();
 		}
 		finally {
-			dbutils.closeConnection(connection);
+			dbUtils.closeConnection(connection);
 		}
 		return Optional.of(product);
 	}
