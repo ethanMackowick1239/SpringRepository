@@ -23,8 +23,6 @@ public class Employee {
 	@Id
 	@Column(name = "employee_id")
 	private Long id;
-	private Long organizationId;
-	private Long departmentId;
 	private String name;
 	private int age;
 	private String position;
@@ -32,5 +30,9 @@ public class Employee {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "department_id")
 	private Department department;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "organization_id")
+	private Organization organization;
 	
 }

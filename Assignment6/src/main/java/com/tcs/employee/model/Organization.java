@@ -1,8 +1,7 @@
 package com.tcs.employee.model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,26 +11,27 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "department_table")
+@Table(name = "organization_table")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Department {
+public class Organization {
 	
 	@Id
-	@Column(name = "department_id")
+	@Column(name = "organization_id")
 	private Long id; 
-	private Long organizationId; 
-	private String name;  
+	private String name; 
+	private String address; 
 	
-	@OneToMany(mappedBy = "department",fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-	private Set<Employee> employee = new HashSet<>();
 	
+	@OneToMany(mappedBy = "organization",fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	private List<Employee> employees = new ArrayList<>(); 
+
+
 
 }

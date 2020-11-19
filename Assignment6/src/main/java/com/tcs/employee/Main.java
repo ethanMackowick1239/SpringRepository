@@ -8,8 +8,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import com.tcs.employee.config.DBConfig;
 import com.tcs.employee.model.Department;
 import com.tcs.employee.model.Employee;
+import com.tcs.employee.model.Organization;
 import com.tcs.employee.repository.DepartmentRepository;
 import com.tcs.employee.repository.EmployeeRepository;
+import com.tcs.employee.repository.OrganizationRepository;
 
 
 public class Main {
@@ -23,12 +25,15 @@ public class Main {
 		
 		EmployeeRepository employeeRepository = context.getBean(EmployeeRepository.class);
 		DepartmentRepository departmentRepository = context.getBean(DepartmentRepository.class);
+		OrganizationRepository organizationRepository = context.getBean(OrganizationRepository.class);
+		Organization organization = new Organization(1l, "Strategy", "Abbey brook", null);
 		Department department = new Department(0l, 0l, "Marketing", null);
 		departmentRepository.save(department);
+		organizationRepository.save(organization);
 		
-		Employee employee = new Employee(1l, 1l, 1l, "Ethan", 23, "Big Boy", department);
-		Employee employee2 = new Employee(2l,1l, 1l, "Bob", 23, "Big Boy", department);
-		Employee employee3 = new Employee(3l,1l, 1l, "Bob", 23, "Big Boy", department);
+		Employee employee = new Employee(1l,  "Ethan", 23, "Big Boy", department, organization);
+		Employee employee2 = new Employee(2l, "Bob", 23, "Big Boy", department, organization);
+		Employee employee3 = new Employee(3l, "Bob", 23, "Big Boy", department, organization);
 		employeeRepository.save(employee);
 		employeeRepository.save(employee2);
 		employeeRepository.save(employee3);
