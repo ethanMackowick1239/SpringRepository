@@ -1,0 +1,7 @@
+com/tcs/mvcdemo/model/Login.class
+com/tcs/mvcdemo/config/WebConfig.class
+com/tcs/mvcdemo/controller/AuthController.class
+com/tcs/mvcdemo/controller/HomeController.class
+com/tcs/mvcdemo/config/RootConfig.class
+com/tcs/mvcdemo/repository/LoginRepository.class
+com/tcs/mvcdemo/config/MyWebAppInitializer.class

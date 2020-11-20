@@ -1,0 +1,7 @@
+/home/ubuntu/SpringRepository/mvcdemo/src/main/java/com/tcs/mvcdemo/config/RootConfig.java
+/home/ubuntu/SpringRepository/mvcdemo/src/main/java/com/tcs/mvcdemo/repository/LoginRepository.java
+/home/ubuntu/SpringRepository/mvcdemo/src/main/java/com/tcs/mvcdemo/model/Login.java
+/home/ubuntu/SpringRepository/mvcdemo/src/main/java/com/tcs/mvcdemo/config/MyWebAppInitializer.java
+/home/ubuntu/SpringRepository/mvcdemo/src/main/java/com/tcs/mvcdemo/controller/HomeController.java
+/home/ubuntu/SpringRepository/mvcdemo/src/main/java/com/tcs/mvcdemo/config/WebConfig.java
+/home/ubuntu/SpringRepository/mvcdemo/src/main/java/com/tcs/mvcdemo/controller/AuthController.java
