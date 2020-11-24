@@ -14,16 +14,3 @@
 0:0:0:0:0:0:0:1 - - [20/Nov/2020:19:42:23 +0000] "POST /auth/login.html HTTP/1.1" 200 394 http-bio-9000-exec-1 257
 0:0:0:0:0:0:0:1 - - [20/Nov/2020:19:46:38 +0000] "POST /auth/login.html HTTP/1.1" 200 417 http-bio-9000-exec-1 1255
 0:0:0:0:0:0:0:1 - - [20/Nov/2020:19:46:56 +0000] "POST /auth/login.html HTTP/1.1" 200 427 http-bio-9000-exec-3 113
-0:0:0:0:0:0:0:1 - - [20/Nov/2020:20:19:58 +0000] "GET / HTTP/1.1" 200 188 http-bio-9000-exec-1 255
-0:0:0:0:0:0:0:1 - - [20/Nov/2020:20:20:01 +0000] "GET /auth/login.html HTTP/1.1" 200 405 http-bio-9000-exec-3 34
-0:0:0:0:0:0:0:1 - - [20/Nov/2020:20:20:02 +0000] "POST /auth/login.html HTTP/1.1" 200 427 http-bio-9000-exec-4 106
-0:0:0:0:0:0:0:1 - - [20/Nov/2020:20:31:13 +0000] "POST /auth/login.html HTTP/1.1" 200 538 http-bio-9000-exec-6 700
-0:0:0:0:0:0:0:1 - - [20/Nov/2020:20:31:13 +0000] "GET /favicon.ico HTTP/1.1" 404 949 http-bio-9000-exec-8 4
-0:0:0:0:0:0:0:1 - - [20/Nov/2020:20:31:17 +0000] "GET /auth/login.html HTTP/1.1" 200 495 http-bio-9000-exec-9 2
-0:0:0:0:0:0:0:1 - - [20/Nov/2020:20:31:20 +0000] "GET /auth/login.html HTTP/1.1" 200 495 http-bio-9000-exec-10 3
-0:0:0:0:0:0:0:1 - - [20/Nov/2020:20:32:01 +0000] "GET /auth/login.html HTTP/1.1" 200 489 http-bio-9000-exec-10 97
-0:0:0:0:0:0:0:1 - - [20/Nov/2020:20:32:01 +0000] "GET /favicon.ico HTTP/1.1" 404 949 http-bio-9000-exec-3 2
-0:0:0:0:0:0:0:1 - - [20/Nov/2020:20:33:09 +0000] "GET /auth/login.html HTTP/1.1" 200 507 http-bio-9000-exec-2 83
-0:0:0:0:0:0:0:1 - - [20/Nov/2020:20:33:10 +0000] "GET /favicon.ico HTTP/1.1" 404 949 http-bio-9000-exec-6 1
-0:0:0:0:0:0:0:1 - - [20/Nov/2020:20:33:44 +0000] "GET /auth/login.html HTTP/1.1" 200 544 http-bio-9000-exec-6 45
-0:0:0:0:0:0:0:1 - - [20/Nov/2020:20:33:44 +0000] "GET /favicon.ico HTTP/1.1" 404 949 http-bio-9000-exec-9 2

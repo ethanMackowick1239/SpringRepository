@@ -7,9 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-THis is Login Page
+<h1 style= "text-align:center;">Login Page</h1>
 
-<table>
+<table style = "margin-left: autp; margin-right: auto;">
 <form action="/auth/login.html" method="post">
 <tr>
 <td>UserName
@@ -19,7 +19,7 @@ THis is Login Page
 <tr>
 <td>Password
 </td>
-<td><input type="text" name="password" />
+<td><input type="text" name="password" /><div>${password }</div>
 </tr><tr>
 <td><input type="submit"/></td></tr>
 </form>
