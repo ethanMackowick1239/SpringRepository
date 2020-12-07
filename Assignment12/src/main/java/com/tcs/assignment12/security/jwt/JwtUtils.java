@@ -1,4 +1,4 @@
-package com.tcs.authdemo.security.jwt;
+package com.tcs.assignment12.security.jwt;
 
 import java.util.Date;
 
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import com.tcs.authdemo.security.services.UserDetailsImpl;
+import com.tcs.assignment12.security.services.UserDetailsImpl;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
