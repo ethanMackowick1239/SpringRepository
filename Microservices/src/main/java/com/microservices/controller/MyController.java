@@ -221,5 +221,13 @@ public class MyController {
 	public void deleteProduct(@PathVariable long id) {
 		restTemplate.delete("http://localhost:9011/api/v1/product/" + id);
 	}
+	
+	@PutMapping("/product/{id}")
+	public ResponseEntity<@Valid Product> UpdateProduct(@PathVariable("id") Integer id, @Valid @RequestBody Product product) {
+	restTemplate.put("http://localhost:9011/api/v1/product/" + id, product);
+
+	 return ResponseEntity.ok(product);
+
+	 }
 
 }
