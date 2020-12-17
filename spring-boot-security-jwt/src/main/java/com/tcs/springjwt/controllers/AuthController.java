@@ -20,14 +20,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tcs.springjwt.models.ERole;
-import com.tcs.springjwt.models.Role;
 import com.tcs.springjwt.models.User;
 import com.tcs.springjwt.payload.request.LoginRequest;
 import com.tcs.springjwt.payload.request.SignupRequest;
 import com.tcs.springjwt.payload.response.JwtResponse;
 import com.tcs.springjwt.payload.response.MessageResponse;
-import com.tcs.springjwt.repository.RoleRepository;
 import com.tcs.springjwt.repository.UserRepository;
 import com.tcs.springjwt.security.jwt.JwtUtils;
 import com.tcs.springjwt.security.services.UserDetailsImpl;
@@ -42,8 +39,6 @@ public class AuthController {
 	@Autowired
 	UserRepository userRepository;
 
-	@Autowired
-	RoleRepository roleRepository;
 
 	@Autowired
 	PasswordEncoder encoder;
@@ -61,15 +56,13 @@ public class AuthController {
 		String jwt = jwtUtils.generateJwtToken(authentication);
 		
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();		
-		List<String> roles = userDetails.getAuthorities().stream()
-				.map(item -> item.getAuthority())
-				.collect(Collectors.toList());
+		
 
 		return ResponseEntity.ok(new JwtResponse(jwt, 
 												 userDetails.getId(), 
 												 userDetails.getUsername(), 
-												 userDetails.getEmail(), 
-												 roles));
+												 userDetails.getEmail()
+												 ));
 	}
 
 	@PostMapping("/signup")
@@ -91,37 +84,8 @@ public class AuthController {
 							 signUpRequest.getEmail(),
 							 encoder.encode(signUpRequest.getPassword()));
 
-		Set<String> strRoles = signUpRequest.getRole();
-		Set<Role> roles = new HashSet<>();
+	
 
-		if (strRoles == null) {
-			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-			roles.add(userRole);
-		} else {
-			strRoles.forEach(role -> {
-				switch (role) {
-				case "admin":
-					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(adminRole);
-
-					break;
-				case "mod":
-					Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(modRole);
-
-					break;
-				default:
-					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(userRole);
-				}
-			});
-		}
-
-		user.setRoles(roles);
 		userRepository.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
