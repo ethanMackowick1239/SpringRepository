@@ -236,7 +236,7 @@ public class MyController {
 	public Review[] getAllReviews() throws ResourceNotFoundException{
 		Review[] reviews;
 		try {
-		 reviews = restTemplate.getForObject("http://localhost:5000/api/v1/review/", Review[].class);
+		 reviews = restTemplate.getForObject("http://localhost:9020/api/v1/review/", Review[].class);
 		}
 		catch(HttpClientErrorException e) {
 			throw new ResourceNotFoundException("Reviews not found");
