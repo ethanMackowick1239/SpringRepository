@@ -110,6 +110,13 @@ public class ReviewController {
 		
 		return ResponseEntity.ok().body(reviews);
 	}
+	
+	@GetMapping
+	public ResponseEntity<List<Review>> getProducts() {
+		
+		List<Review> reviews = reviewService.getAllReviews().get();
+		return ResponseEntity.ok().body(reviews);
+	}
 
 
 

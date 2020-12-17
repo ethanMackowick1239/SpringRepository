@@ -23,10 +23,13 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.microservices.exception.ResourceNotFoundException;
+import com.microservices.model.LoginRequest;
 import com.microservices.model.Price;
 import com.microservices.model.Product;
 import com.microservices.model.Review;
+import com.microservices.model.SignupRequest;
 import com.microservices.model.Stock;
+import com.microservices.model.User;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -229,5 +232,30 @@ public class MyController {
 	 return ResponseEntity.ok(product);
 
 	 }
+	@GetMapping("/review")
+	public Review[] getAllReviews() throws ResourceNotFoundException{
+		Review[] reviews;
+		try {
+		 reviews = restTemplate.getForObject("http://localhost:5000/api/v1/review/", Review[].class);
+		}
+		catch(HttpClientErrorException e) {
+			throw new ResourceNotFoundException("Reviews not found");
+		}
+		return reviews;
+	}
+	
+	   @PostMapping("/signup")
+	    public User createUser(@RequestBody SignupRequest user, UriComponentsBuilder uriComponentsBuilder,
+	            HttpServletRequest request) {
+	        return restTemplate.postForObject("http://localhost:10000/api/auth/signup", user, User.class);
+	    
+	    }
+	    
+	    @PostMapping("/signin")
+	    public User loginUser(@RequestBody LoginRequest user, UriComponentsBuilder uriComponentsBuilder,
+	            HttpServletRequest request) {
+	        return restTemplate.postForObject("http://localhost:10000/api/auth/signin", user, User.class);
+	    
+	    }
 
 }

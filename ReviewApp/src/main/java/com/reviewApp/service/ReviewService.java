@@ -11,4 +11,5 @@ public interface ReviewService {
     public String deleteReview(long id);
     public Optional<Review> getProductById(long id);
 	public Optional<List<Review>> getReviews(long productId);
+	public Optional<List<Review>> getAllReviews();
 }

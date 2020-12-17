@@ -63,6 +63,13 @@ public class ReviewServiceImpl implements ReviewService {
         return Optional.ofNullable(reviewList);
 		
 	}
+	@Override
+	public Optional<List<Review>> getAllReviews() {
+		Optional<List<Review>> reviews = Optional.ofNullable(reviewRepository.findAll());
+		List<Review> reviewList = reviews.orElse(null);
+		return Optional.of(reviewList);
+		
+	}
 	
 
 
