@@ -1,7 +1,9 @@
 package com.tcs.authdemo.controller;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -18,10 +20,16 @@ import com.tcs.authdemo.model.Role;
 import com.tcs.authdemo.model.User;
 import com.tcs.authdemo.payload.request.LoginRequest;
 import com.tcs.authdemo.payload.request.SignupRequest;
+import com.tcs.authdemo.payload.response.JwtResponse;
 import com.tcs.authdemo.payload.response.MessageResponse;
 import com.tcs.authdemo.repository.RoleRepository;
 import com.tcs.authdemo.repository.UserRepository;
-
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import com.tcs.authdemo.security.jwt.JwtUtils;
+import com.tcs.authdemo.security.services.UserDetailsImpl;
 @CrossOrigin("*")
 @Controller
 @RequestMapping("/api/auth")
@@ -33,10 +41,22 @@ public class AuthController {
 	
 	@Autowired
 	RoleRepository roleRepository;
+	@Autowired
+	AuthenticationManager authenticationmanager;
 	
-	@PostMapping("/login")
+	@Autowired
+	JwtUtils jwtUtils;
+	
+	@PostMapping("/signin")
 	public ResponseEntity<?> loginUser(@Valid @RequestBody LoginRequest loginRequest) {
-		return null;
+		Authentication authentication = authenticationmanager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),loginRequest.getPassword()));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String jwt = jwtUtils.generateJwtToken(authentication);
+		UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
+		List<String> roles = userDetailsImpl.getAuthorities().stream().map(i->i.getAuthority()).collect(Collectors.toList());
+		
+		return ResponseEntity.ok(new JwtResponse(jwt,userDetailsImpl.getId(),userDetailsImpl.getEmail(),userDetailsImpl.getUsername(),roles));
+		
 	}
 	@PostMapping("/signup")
 	
