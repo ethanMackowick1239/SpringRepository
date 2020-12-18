@@ -252,10 +252,15 @@ public class MyController {
 	    }
 	    
 	    @PostMapping("/signin")
-	    public User loginUser(@RequestBody LoginRequest user, UriComponentsBuilder uriComponentsBuilder,
-	            HttpServletRequest request) {
-	        return restTemplate.postForObject("http://localhost:10000/api/auth/signin", user, User.class);
-	    
+	    public Boolean loginUser(@RequestBody LoginRequest user, UriComponentsBuilder uriComponentsBuilder,
+	    	HttpServletRequest request) {
+	    	try {
+	    		restTemplate.postForObject("http://localhost:10000/api/auth/signin", user, User.class);
+	    		return true;
+	    	}
+	    	catch (HttpClientErrorException ex) {
+	    		return false;
+	    	}
 	    }
 
 }
